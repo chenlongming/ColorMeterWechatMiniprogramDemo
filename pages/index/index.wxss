@@ -1,0 +1,37 @@
+/**index.wxss**/
+.tool-bar {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 -3px 3px #ccc;
+  z-index: 999;
+}
+
+.device-list {
+  padding: 10px;
+  box-sizing: border-box;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+.device-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 0 2px 5px #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.device-item .device-inf {
+  flex-grow: 99;
+  flex-shrink: 99;
+  padding-right: 10px;
+}
+
+.device-item .connect-btn {
+  flex-shrink: 0;
+  flex-grow: 0;
+}

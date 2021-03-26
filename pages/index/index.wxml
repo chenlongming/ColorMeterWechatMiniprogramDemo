@@ -1,0 +1,16 @@
+<!--index.wxml-->
+<view class="device-list">
+
+  <view class="device-item" wx:for="{{devices}}" wx:key="deviceId">
+    <view class="device-inf">
+      <view class="name">{{ item.name }}</view>
+      <view class="id">{{ item.deviceId }}</view>
+    </view>
+    <button class="connect-btn" type="default" size="mini" data-device="{{item}}" bind:tap="connect">连接</button>
+  </view>
+
+</view>
+
+<view class='tool-bar'>
+  <button type="primary" loading="{{discovering}}" bind:tap="startScan">{{ discovering ? '扫描中' : '扫描' }}</button>
+</view>

@@ -1,0 +1,13 @@
+/* pages/measure/measure.wxss */
+
+.m-btns {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.btn {
+    width: 120px !important;
+    flex-grow: 0;
+    display: block;
+}
