@@ -22,11 +22,6 @@ Page({
     this.setData({ lab: JSON.stringify(lab, null, 2) });
   },
 
-  async measureSpectral() {
-    const spectral = await Bluetooth.shared.measureAndGetSpectral();
-    console.log(spectral);
-  },
-
   onUnload() {
     // 退出页面时断开连接
     Bluetooth.shared.disconnect();

@@ -8,5 +8,4 @@
 <view class='m-btns'>
     <button type="primary" bind:tap="measureLab" class="btn" size="mini">测量 Lab</button>
     <button type="primary" bind:tap="measureRGB" class="btn" size="mini">测量 RGB</button>
-    <button type="primary" bind:tap="measureSpectral" class="btn" size="mini">测量 光谱</button>
 </view>
