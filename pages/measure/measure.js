@@ -22,6 +22,18 @@ Page({
     this.setData({ lab: JSON.stringify(lab, null, 2) });
   },
 
+  whiteCalibrate() {
+    Bluetooth.shared.whiteCalibrate().then(console.log.bind(null, 'white'));
+  },
+
+  blackCalibrate() {
+    Bluetooth.shared.blackCalibrate().then(console.log.bind(null, 'black'));
+  },
+
+  getCalibrationInf() {
+    Bluetooth.shared.getCalibrationInf().then(console.log.bind(null, 'calibration'));
+  },
+
   onUnload() {
     // 退出页面时断开连接
     Bluetooth.shared.disconnect();

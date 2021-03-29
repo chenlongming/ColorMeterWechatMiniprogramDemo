@@ -1,5 +1,5 @@
 import { Command } from "./command";
-import { uint8ArrayToFloat32, uint8ArrayToHex, uint8ArrayToUint16, waitFor } from "./utils";
+import { uint8ArrayToFloat32, uint8ArrayToHex, uint8ArrayToUint16, uint8ArrayToUnit32, waitFor } from "./utils";
 
 /**
  * `Bluetooth` 类封装了微信小程序蓝牙相关的操作:
@@ -412,5 +412,47 @@ export class Bluetooth {
         await this.measure(mode);
         await waitFor(50);
         return await this.getRGB(mode);
+    }
+
+    /**
+     * 白校准
+     * @param {number} check 是否判断校准成功
+     */
+    async whiteCalibrate(check = 0) {
+        await this.exec(Command.WakeUp);
+        await waitFor(50);
+        const data = await this.exec(Command.whiteCalibrate(check));
+        return {
+            success: check === 0 || (check === 1 && data[2]) === 0,
+            timestamp: uint8ArrayToUnit32(data.slice(3, 7))
+        };
+    }
+
+    /**
+     * 黑校准
+     * @param {number} check 是否判断校准成功
+     * @returns 
+     */
+    async blackCalibrate(check = 0) {
+        await this.exec(Command.WakeUp);
+        await waitFor(50);
+        const data = await this.exec(Command.blackCalibrate(check));
+        return {
+            success: check === 0 || (check === 1 && data[2]) === 0,
+            timestamp: uint8ArrayToUnit32(data.slice(3, 7))
+        };
+    }
+
+    /** 获取校准信息 */
+    async getCalibrationInf() {
+        await this.exec(Command.WakeUp);
+        await waitFor(50);
+        const data = await this.exec(Command.GetCalibrationInf);
+        return {
+            whiteCalibrated: data[2] === 1,
+            whiteCalibrationTimestamp: uint8ArrayToUnit32(data.slice(3, 7)),
+            blackCalibrated: data[7] === 1,
+            blackCalibrationTimestamp: uint8ArrayToUnit32(data.slice(8, 12))
+        };
     }
 }
