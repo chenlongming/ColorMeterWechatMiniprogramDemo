@@ -9,3 +9,12 @@
     <button type="primary" bind:tap="measureLab" class="btn" size="mini">测量 Lab</button>
     <button type="primary" bind:tap="measureRGB" class="btn" size="mini">测量 RGB</button>
 </view>
+
+<view class='m-btns'>
+    <button type="primary" bind:tap="whiteCalibrate" class="btn" size="mini">白校准</button>
+    <button type="primary" bind:tap="blackCalibrate" class="btn" size="mini">黑校准</button>
+</view>
+
+<view class='m-btns'>
+    <button type="primary" bind:tap="getCalibrationInf" class="btn" size="mini">获取校准信息</button>
+</view>

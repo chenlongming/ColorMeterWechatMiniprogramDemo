@@ -25,6 +25,16 @@ export function uint8ArrayToUint16(raw) {
 
 
 /**
+ * Uint8 数组转 Uint32
+ * @param {Uint8Array} raw 
+ * @returns 
+ */
+export function uint8ArrayToUnit32(raw) {
+    return new Uint32Array(raw.buffer)[0];
+}
+
+
+/**
  * 等待指定时长
  * @param {number} duration 
  */

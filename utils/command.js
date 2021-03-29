@@ -110,4 +110,25 @@ export class Command {
     static getRGB(mode = 0) {
         return new Command([0xbb, 4, mode, 0, 0, 0, 0, 0, 0xff, 0], 20, 1500);
     }
+
+    /**
+     *  白校准
+     * @param {number} check 是否判断校准成功 1 判断 0 不判断
+     */
+    static whiteCalibrate(check = 1) {
+        return new Command([0xbb, 0x11, check, 0, 0, 0, 0, 0, 0xff, 0], 10, 1500);
+    }
+
+
+    /**
+     * 黑校准
+     * @param {number} check 是否判断校准成功
+     */
+    static blackCalibrate(check = 1) {
+        return new Command([0xbb, 0x10, check, 0, 0, 0, 0, 0, 0xff, 0], 10, 1500);
+    }
+
+
+    /** 获取校准状态 */
+    static GetCalibrationInf = new Command([0xbb, 0x1e, 0, 0, 0, 0, 0, 0, 0xff, 0], 20, 1500);
 }
