@@ -81,7 +81,7 @@ export class Bluetooth {
      * 1. 适配器状态变化 { type: 'stateUpdate', detail: { discovering: boolean, available: boolean } } 
      * 2. 连接成功 { type: 'connected', detail: { deviceId: string } }
      * 3. 断开连接 { type: 'disconnect', detail: { deviceId: string } }
-     * 4. 仪器测量成功(不包含发送测量命令返回的测量成功) { type: 'measure', detail: { mode: number } }
+     * 4. 仪器测量成功(不包含发送测量命令返回的测量成功, 获取本次测量成功的仪器数据需要调用对应的获取仪器数据接口如: `getLab`, `getRGB`) { type: 'measure', detail: { mode: number } }
      * 
      * @param {(ev: {type: string; detail: any}) => void} cb 
      */
@@ -93,7 +93,7 @@ export class Bluetooth {
 
     /** 注销事件监听 */
     unsubscribe(cb) {
-        if (cb) {
+        if (cb) {``
             this.listeners.delete(cb);
         }
     }
