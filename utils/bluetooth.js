@@ -81,6 +81,7 @@ export class Bluetooth {
      * 1. 适配器状态变化 { type: 'stateUpdate', detail: { discovering: boolean, available: boolean } } 
      * 2. 连接成功 { type: 'connected', detail: { deviceId: string } }
      * 3. 断开连接 { type: 'disconnect', detail: { deviceId: string } }
+     * 4. 仪器测量成功(不包含发送测量命令返回的测量成功) { type: 'measure', detail: { mode: number } }
      * 
      * @param {(ev: {type: string; detail: any}) => void} cb 
      */
@@ -280,6 +281,12 @@ export class Bluetooth {
                     this.responseReject(new Error('无效数据'));
                 }
                 this.resetCommand();
+            }
+        } else {
+            const uint8Array = new Uint8Array(buffer);
+            if (uint8Array[0] === 0xbb && uint8Array[1] === 1 && uint8Array[3] === 0) {
+                const ev = { type: 'measure', detail: { mode: uint8Array[2] } };
+                this.emit(ev);
             }
         }
     }
