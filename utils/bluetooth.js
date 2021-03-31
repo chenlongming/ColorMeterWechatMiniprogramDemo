@@ -93,7 +93,7 @@ export class Bluetooth {
 
     /** 注销事件监听 */
     unsubscribe(cb) {
-        if (cb) {``
+        if (cb) {
             this.listeners.delete(cb);
         }
     }
