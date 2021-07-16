@@ -57,3 +57,14 @@ export function uint8ArrayToHex(raw) {
     });
     return s.join(' ');
 }
+
+
+// 二进制转字符串(ascii)
+export function bufferToString(buffer) {
+    let str = "";
+    for (let code of buffer) {
+        if (code === 0) break;
+        str += utf82string(code);
+    }
+    return str;
+}

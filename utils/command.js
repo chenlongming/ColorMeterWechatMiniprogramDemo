@@ -131,4 +131,8 @@ export class Command {
 
     /** 获取校准状态 */
     static GetCalibrationInf = new Command([0xbb, 0x1e, 0, 0, 0, 0, 0, 0, 0xff, 0], 20, 1500);
+
+
+
+    static GetDeviceInf = new Command([0xbb, 0x12, 0x01, 0, 0, 0, 0, 0, 0xff, 0], 200, 5000);
 }

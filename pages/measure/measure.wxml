@@ -17,4 +17,5 @@
 
 <view class='m-btns'>
     <button type="primary" bind:tap="getCalibrationInf" class="btn" size="mini">获取校准信息</button>
+    <button type="primary" bind:tap="getDeviceInf" class="btn" size="mini">获取仪器信息</button>
 </view>

@@ -277,6 +277,7 @@ export class Bluetooth {
             if (this.command.isComplete) {
                 if (this.command.isValid && this.responseResolve) {
                     this.responseResolve(this.command.response);
+                    // console.log(uint8ArrayToHex(this.command.response));
                 } else if (!this.command.isValid) {
                     this.responseReject(new Error('无效数据'));
                 }
@@ -460,6 +461,16 @@ export class Bluetooth {
             whiteCalibrationTimestamp: uint8ArrayToUnit32(data.slice(3, 7)),
             blackCalibrated: data[7] === 1,
             blackCalibrationTimestamp: uint8ArrayToUnit32(data.slice(8, 12))
+        };
+    }
+
+
+    async getDeviceInf() {
+        await this.exec(Command.WakeUp);
+        await waitFor(50);
+        const data = await this.exec(Command.GetDeviceInf);
+        return {
+            code: uint8ArrayToUint16(data.slice(5, 7))
         };
     }
 }
