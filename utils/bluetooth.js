@@ -314,7 +314,6 @@ export class Bluetooth {
                     const data = command.data;
                     for (let i = 0; i < data.length; i++) {
                         await this.sendData(data[i]);
-                        await waitFor(10);
                     }
 
                     if (command.responseSize <= 0) {
