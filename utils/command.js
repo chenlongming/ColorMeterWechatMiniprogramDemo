@@ -1,4 +1,4 @@
-import { uint32ToUint8Array } from "./utils";
+import { uint32ToUint8Array, uint8ArrayToHex } from "./utils";
 
 export class Command {
     // 测量序号
@@ -91,7 +91,8 @@ export class Command {
      */
     static measure(mode = 0) {
         const measureId = uint32ToUint8Array(Command.measureId);
-        Command.measureId++;
+        console.log('measure id', uint8ArrayToHex(measureId), Command.measureId);
+        Command.measureId += 1;
         return new Command([0xbb, 1, mode, ...measureId, 0, 0xff, 0], 10, 1500);
     }
 

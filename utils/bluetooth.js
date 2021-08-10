@@ -41,7 +41,7 @@ export class Bluetooth {
     responseTimer = null;
 
     /** 是否显示蓝牙调试信息 */
-    debug = true;
+    debug = false;
 
     
     constructor() {
@@ -314,6 +314,7 @@ export class Bluetooth {
                     const data = command.data;
                     for (let i = 0; i < data.length; i++) {
                         await this.sendData(data[i]);
+                        await waitFor(10);
                     }
 
                     if (command.responseSize <= 0) {

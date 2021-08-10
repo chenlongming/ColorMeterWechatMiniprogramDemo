@@ -3,7 +3,7 @@
  * @param {number} n 
  */
 export function uint32ToUint8Array(n) {
-    return new Uint8Array(new Uint32Array(n).buffer);
+    return new Uint8Array(new Uint32Array([n]).buffer);
 }
 
 /**
