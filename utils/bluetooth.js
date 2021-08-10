@@ -41,7 +41,7 @@ export class Bluetooth {
     responseTimer = null;
 
     /** 是否显示蓝牙调试信息 */
-    debug = false;
+    debug = true;
 
     
     constructor() {
@@ -176,7 +176,7 @@ export class Bluetooth {
 
     /** 断开当前连接的设备 */
     async disconnect() {
-        if (!this.connected || !this.connecting) return;
+        if (!this.connected && !this.connecting) return;
         if (this.connected) {
             await this.closeConnection(this.connected.deviceId);
             this.connected = null;

@@ -90,9 +90,8 @@ export class Command {
      * @param {number} mode 
      */
     static measure(mode = 0) {
-        const measureId = uint32ToUint8Array(Command.measureId);
-        console.log('measure id', uint8ArrayToHex(measureId), Command.measureId);
         Command.measureId += 1;
+        const measureId = uint32ToUint8Array(Command.measureId);
         return new Command([0xbb, 1, mode, ...measureId, 0, 0xff, 0], 10, 1500);
     }
 
