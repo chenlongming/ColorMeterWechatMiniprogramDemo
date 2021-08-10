@@ -112,6 +112,14 @@ export class Command {
     }
 
     /**
+     * 获取测量的光谱数据
+     * @param {number} mode
+     */
+    static getSpectral(mode = 0) {
+        return new Command([0xbb, 2, 0x10 + mode, 0, 0, 0 ,0 ,0, 0xff, 0], 200, 5000);
+    }
+
+    /**
      *  白校准
      * @param {number} check 是否判断校准成功 1 判断 0 不判断
      */

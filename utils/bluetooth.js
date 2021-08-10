@@ -40,6 +40,9 @@ export class Bluetooth {
     responseReject = null;
     responseTimer = null;
 
+    /** 是否显示蓝牙调试信息 */
+    debug = true;
+
     
     constructor() {
         this.init();
@@ -273,6 +276,9 @@ export class Bluetooth {
      */
     notifySubscriber(buffer) {
         if (this.command) {
+            if (this.debug) {
+                console.log(`[BLE RESP] ${uint8ArrayToHex(new Uint8Array(buffer))}`);
+            }
             this.command.fillResponse(buffer);
             if (this.command.isComplete) {
                 if (this.command.isValid && this.responseResolve) {
@@ -296,6 +302,7 @@ export class Bluetooth {
     /**
      * 发送命令
      * @param {Command}} command 
+     * @returns {Promise<Uint8Array>}
      */
     exec(command) {
         return new Promise(async (resolve, reject) => {
@@ -334,6 +341,9 @@ export class Bluetooth {
      * @param {ArrayBuffer} buffer 
      */
     sendData(buffer) {
+        if (this.debug) {
+            console.log(`[BLE SEND] ${uint8ArrayToHex(new Uint8Array(buffer))}`);
+        }
         return new Promise((resolve, reject) => {
             wx.writeBLECharacteristicValue({
                 deviceId: this.connected.deviceId,
@@ -420,6 +430,49 @@ export class Bluetooth {
         await this.measure(mode);
         await waitFor(50);
         return await this.getRGB(mode);
+    }
+
+
+    async getSpectral(mode = 0) {
+        await this.exec(Command.WakeUp);
+        await waitFor(50);
+        const data = await this.exec(Command.getSpectral(mode));
+        const onlyLab = data[3] === 1;
+        if (onlyLab) {
+            return {
+                onlyLab,
+                L: uint8ArrayToFloat32(data.slice(184, 188)),
+                a: uint8ArrayToFloat32(data.slice(188, 192)),
+                b: uint8ArrayToFloat32(data.slice(192, 196))
+            }
+        } else {
+            const waveStart = uint8ArrayToUint16(data.slice(4, 6).reverse());
+            const interval = data[6];
+            const waveCount = data[7];
+            const spectral = [];
+            for (let i = 0; i < waveCount; i++) {
+                const s = i * 4 + 8;
+                const e = s + 4;
+                spectral.push(uint8ArrayToFloat32(data.slice(s, e)));
+            }
+
+            return {
+                onlyLab,
+                waveStart,
+                waveCount,
+                interval,
+                spectral,
+                L: uint8ArrayToFloat32(data.slice(184, 188)),
+                a: uint8ArrayToFloat32(data.slice(188, 192)),
+                b: uint8ArrayToFloat32(data.slice(192, 196)),
+            }
+        }
+    }
+
+    async measureAndGetSpectral(mode = 0) {
+        await this.measure(mode);
+        await waitFor(50);
+        return await this.getSpectral(mode);
     }
 
     /**

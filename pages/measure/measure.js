@@ -8,7 +8,8 @@ Page({
    */
   data: {
     lab: '',
-    rgb: ''
+    rgb: '',
+    spectral: ''
   },
 
   onLoad() {
@@ -56,5 +57,17 @@ Page({
     // 退出页面时取消订阅并且断开连接
     Bluetooth.shared.unsubscribe(this.bleListener);
     Bluetooth.shared.disconnect();
+  },
+
+  async measureSpectral() {
+    wx.showLoading();
+    try {
+      const data = await Bluetooth.shared.measureAndGetSpectral();
+      console.log(data);
+      this.setData({ spectral: ` 是否包含光谱: ${!data.onlyLab}\n 起始波长: ${data.waveStart}nm\n 波长个数: ${data.waveCount}\n 波长间隔: ${data.interval}\n 光谱: ${data.spectral.join(', ')}` });
+    } catch (e) {
+      console.warn(e);
+    }
+    wx.hideLoading();
   }
 })
