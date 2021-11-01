@@ -20,7 +20,7 @@ Page({
     if (ev.type === 'measure') {
       // 监听用户主动点击设备测量按钮的事件, 需要通过对应的获取仪器数据方法读取本次测量结果
       Bluetooth.shared.getRGB(ev.detail.mode).then(res => {
-        wx.showToast(`主动测量结果: R:${res.R}, G: ${res.G}, B: ${res.B}`);
+        console.log(`主动测量结果: R:${res.R}, G: ${res.G}, B: ${res.B}`);
       });
     }
   },
