@@ -1,4 +1,5 @@
 import { Bluetooth } from "../../utils/bluetooth"
+import { Lab2RGB } from "../../utils/utils";
 
 // pages/measure/measure.js
 Page({
@@ -19,8 +20,16 @@ Page({
   bleListener(ev) {
     if (ev.type === 'measure') {
       // 监听用户主动点击设备测量按钮的事件, 需要通过对应的获取仪器数据方法读取本次测量结果
-      Bluetooth.shared.getRGB(ev.detail.mode).then(res => {
-        console.log(`主动测量结果: R:${res.R}, G: ${res.G}, B: ${res.B}`);
+      Bluetooth.shared.getLab(ev.detail.mode).then(res => {
+        const [r, g, b] = Lab2RGB([res.L, res.a, res.b]);
+        this.setData({ 
+          lab: JSON.stringify(res, null, 2) ,
+          rgb: JSON.stringify({
+            r,
+            g,
+            b
+          }, null, 2)
+        });
       });
     }
   },
