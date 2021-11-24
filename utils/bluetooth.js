@@ -508,7 +508,7 @@ export class Bluetooth {
     async getCalibrationInf() {
         await this.exec(Command.WakeUp);
         await waitFor(50);
-        const data = await this.exec(Command.GetCalibrationInf);
+        const data = await this.exec(Command.GetCalibrationInf());
         return {
             whiteCalibrated: data[2] === 1,
             whiteCalibrationTimestamp: uint8ArrayToUnit32(data.slice(3, 7)),
@@ -521,7 +521,7 @@ export class Bluetooth {
     async getDeviceInf() {
         await this.exec(Command.WakeUp);
         await waitFor(50);
-        const data = await this.exec(Command.GetDeviceInf);
+        const data = await this.exec(Command.GetDeviceInf());
         return {
             code: uint8ArrayToUint16(data.slice(5, 7))
         };
