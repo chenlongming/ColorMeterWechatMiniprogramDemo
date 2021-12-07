@@ -480,6 +480,7 @@ export class Bluetooth {
     }
 
 
+    // 旧设备不支持该协议
     async newGetSpectral(mode = 0) {
         await this.exec(Command.WakeUp);
         await waitFor(50);
@@ -503,6 +504,7 @@ export class Bluetooth {
     }
 
 
+    // 旧设备不支持该协议
     async newMeasureAndGetSpectral(mode = 0) {
         await this.measure(mode);
         await waitFor(50);
