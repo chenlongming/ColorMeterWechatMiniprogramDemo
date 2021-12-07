@@ -432,7 +432,11 @@ export class Bluetooth {
         return await this.getRGB(mode);
     }
 
-
+    /**
+     * 获取光谱数据
+     * @param {number} mode 
+     * @returns 
+     */
     async getSpectral(mode = 0) {
         await this.exec(Command.WakeUp);
         await waitFor(50);
@@ -473,6 +477,36 @@ export class Bluetooth {
         await this.measure(mode);
         await waitFor(50);
         return await this.getSpectral(mode);
+    }
+
+
+    async newGetSpectral(mode = 0) {
+        await this.exec(Command.WakeUp);
+        await waitFor(50);
+        const data = await this.exec(Command.newGetSpectral(mode));
+        const waveStart = uint8ArrayToUint16(data.slice(4, 6));
+        const interval = data[6];
+        const waveCount = data[7];
+        const spectral = [];
+        for (let i = 0; i < waveCount; i++) {
+            const s = i * 2 + 8;
+            const e = s + 2;
+            spectral.push(uint8ArrayToUint16(data.slice(s, e) / 100));
+        }
+        return {
+            waveStart,
+            waveCount,
+            interval,
+            spectral,
+            onlyLab: false
+        }
+    }
+
+
+    async newMeasureAndGetSpectral(mode = 0) {
+        await this.measure(mode);
+        await waitFor(50);
+        return await this.newGetSpectral(mode);
     }
 
     /**

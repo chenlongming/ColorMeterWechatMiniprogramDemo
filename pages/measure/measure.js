@@ -78,5 +78,19 @@ Page({
       console.warn(e);
     }
     wx.hideLoading();
+  },
+
+  async newMeasureSpectral() {
+    wx.showLoading();
+    try {
+      const data = await Bluetooth.shared.newMeasureAndGetSpectral();
+      console.log('new spectral', data);
+      this.setData({
+        spectral: ` 👾👾👾新协议\n 是否包含光谱: ${!data.onlyLab}\n 起始波长: ${data.waveStart}nm\n 波长个数: ${data.waveCount}\n 波长间隔: ${data.interval}\n 光谱: ${data.spectral.join(', ')}`
+      });
+    } catch (e) {
+      console.warn(e);
+    }
+    wx.hideLoading();
   }
 })

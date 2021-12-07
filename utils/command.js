@@ -147,4 +147,12 @@ export class Command {
     static GetDeviceInf() {
         return new Command([0xbb, 0x12, 0x01, 0, 0, 0, 0, 0, 0xff, 0], 200, 5000);
     };
+
+    /**
+     * 获取测量光谱(新协议)
+     * @param {number} mode
+     */
+    static newGetSpectral(mode = 0) {
+        return new Command([0xbb, 0x6, 0x10 + mode, 0, 0, 0, 0, 0, 0xff, 0], 100, 3000);
+    }
 }
