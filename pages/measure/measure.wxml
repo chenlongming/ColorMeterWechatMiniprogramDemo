@@ -14,7 +14,7 @@
 
 <view class="m-btns">
     <button type="primary" bind:tap="measureSpectral" class="btn" size="mini">测量光谱</button>
-    <button type="primary" bind:tap="measureSpectral" class="btn" size="mini">测量光谱(新协议)</button>
+    <button type="primary" bind:tap="newMeasureSpectral" class="btn" size="mini">测量光谱(新协议)</button>
 </view>
 
 <view class='m-btns'>
