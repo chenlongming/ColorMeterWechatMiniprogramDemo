@@ -150,3 +150,9 @@ export function utf82string(code) {
     }
     return '';
 }
+
+
+export function counting_words(sentence) {
+    const words = sentence.match(/\b\w+\b/g);
+    return words ? words.length : 0;
+}
