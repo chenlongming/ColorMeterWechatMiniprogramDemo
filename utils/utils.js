@@ -127,9 +127,10 @@ export function string2utf8(char) {
 }
 
 /**
- * utf-8 编码转字符
- * @param {number} code 
- * @returns string
+ * Converts a UTF-8 encoded numeric value to its corresponding character string.
+ *
+ * @param {number} code - The UTF-8 encoded numeric value.
+ * @returns {string} The decoded character, or an empty string if the input is invalid.
  */
 export function utf82string(code) {
     if (code >= 0xf0000000) {
@@ -152,6 +153,12 @@ export function utf82string(code) {
 }
 
 
+/**
+ * Counts the number of words in a sentence.
+ *
+ * @param {string} sentence - The input string to analyze.
+ * @returns {number} The number of word tokens found in {@link sentence}.
+ */
 export function counting_words(sentence) {
     const words = sentence.match(/\b\w+\b/g);
     return words ? words.length : 0;
